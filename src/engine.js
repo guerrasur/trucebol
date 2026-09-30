@@ -52,7 +52,7 @@ export function fronts(s,id=s.turn) { return s.teams.filter(t=>t.id!==id).map(t=
 export function slotPosition(index){return SLOTS[index]||'DEL';}
 export function fitFactor(p,slot){
   if(p.position===slot)return 1;
-  if(slot==='ARQ'||p.position==='ARQ')return slot==='ARQ'?.36:.52;
+  if(slot==='ARQ'||p.position==='ARQ')return slot==='ARQ' ? .36 : .52;
   const pair=new Set([p.position,slot]);
   if(pair.has('MED')&&(pair.has('DEF')||pair.has('DEL')))return .84;
   return .69;
@@ -123,7 +123,7 @@ function performance(teams,events,score,stats){
   }
   teams.forEach((team,side)=>{
     const won=score[side]>score[1-side],draw=score[side]===score[1-side],clean=score[1-side]===0;
-    rows.filter(r=>r.team===team.id).forEach(r=>{r.rating+=(won?.2:draw?.05:-.12);if(clean&&(r.slot==='ARQ'||r.slot==='DEF'))r.rating+=.25;});
+    rows.filter(r=>r.team===team.id).forEach(r=>{r.rating+=(won ? .2 : draw ? .05 : -.12);if(clean&&(r.slot==='ARQ'||r.slot==='DEF'))r.rating+=.25;});
     const keeper=rows.find(r=>r.team===team.id&&r.slot==='ARQ');if(keeper)keeper.rating+=Math.min(.4,(stats[side].saves||0)*.04);
   });
   rows.forEach(r=>r.rating=round1(clamp(r.rating,4.5,10)));
